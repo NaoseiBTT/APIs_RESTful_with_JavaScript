@@ -6,19 +6,28 @@ const db = require('../services/database_connection.js');
 const { comandas } = require('../services/database_mock.js');
 
 // Função que retorna todas as comandas (pedidos) registradas
-const getComandas = (req, res) => {
+const getComandas = async (req, res) => {
   try {
-    res.status(200).json({
+    const [rows] = await db.query('SELECT * FROM comandas ORDER BY criado_em DESC');
+
+    // Parse do campo JSON 'itens' (MySQL pode retornar como string, array ou objeto)
+    const comandasComItens = rows.map(comanda => ({
+      ...comanda,
+      itens: Array.isArray(comanda.itens)
+        ? comanda.itens
+        : (typeof comanda.itens === 'string' ? JSON.parse(comanda.itens) : comanda.itens)
+    }));
+
+    res.json({
       sucesso: true,
-      mensagem: 'Comandas recuperadas com sucesso',
-      quantidade: comandas.length,
-      dados: comandas
+      dados: comandasComItens
     });
-  } catch (error) {
+
+  } catch (erro) {
+    console.error('Erro ao listar comandas:', erro);
     res.status(500).json({
       sucesso: false,
-      mensagem: 'Erro ao buscar comandas',
-      erro: error.message
+      mensagem: 'Erro ao listar comandas'
     });
   }
 };
