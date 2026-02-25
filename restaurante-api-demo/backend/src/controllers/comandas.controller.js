@@ -8,7 +8,7 @@ const { comandas } = require('../services/database_mock.js');
 // Função que retorna todas as comandas (pedidos) registradas
 const getComandas = async (req, res) => {
   try {
-    const [rows] = await db.query('SELECT * FROM comandas ORDER BY criado_em DESC');
+    const [rows] = await db.query('SELECT * FROM comandas');
 
     // Parse do campo JSON 'itens' (MySQL pode retornar como string, array ou objeto)
     const comandasComItens = rows.map(comanda => ({
