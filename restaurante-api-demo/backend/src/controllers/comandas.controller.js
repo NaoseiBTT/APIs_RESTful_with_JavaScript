@@ -15,7 +15,7 @@ const getComandas = async (req, res) => {
       ...comanda,
       itens: Array.isArray(comanda.itens)
         ? comanda.itens
-        : (typeof comanda.itens === 'string' ? JSON.parse(comanda.itens) : comanda.itens)
+        : (typeof comanda.itens === 'string' ? JSON.stringify(comanda.itens) : comanda.itens)
     }));
 
     res.json({
