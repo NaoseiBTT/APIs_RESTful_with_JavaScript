@@ -1,9 +1,11 @@
 import axios from 'axios';
 
+const baseURL = import.meta.env.VITE_API_URL
+
 // Cria uma "instância" do axios com a URL base do nosso back-end
 // Isso facilita pois não precisamos repetir a URL completa em cada requisição
 const api = axios.create({
-  baseURL: 'https://apis-restful-with-javascript-vhsf.onrender.com/api', // A porta do nosso back-end
+  baseURL: baseURL, // A porta do nosso back-end
 });
 
 // Função para buscar o cardápio completo
