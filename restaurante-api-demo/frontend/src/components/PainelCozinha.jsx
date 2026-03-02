@@ -140,7 +140,7 @@ export function PainelCozinha({ refreshTrigger }) {
         }
       </p>
       
-      {comandas.length > 0 && (
+      {comandas?.length > 0 && (
         <div className="cozinha-lista">
           {comandas.map((comanda) => (
             <div key={comanda.id} className="cozinha-pedido">
